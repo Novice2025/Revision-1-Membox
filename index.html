@@ -6,6 +6,9 @@
     <title>Daby English Expressions</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- jsPDF for PDF export -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <!-- Google Fonts - Inter -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <style>
@@ -107,10 +110,109 @@
             margin-top: auto; /* Pushes footer to the bottom */
             border-top: 1px solid #2d3748;
         }
+
+        /* Drag and Drop Styles */
+        #drag-drop-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        .drag-items {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+        .drag-item {
+            background-color: #facc15;
+            color: #1a202c;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            text-align: center;
+            cursor: grab;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            font-weight: 600;
+            transition: transform 0.2s ease, opacity 0.2s ease;
+        }
+        .drag-item:active {
+            cursor: grabbing;
+            transform: scale(1.05);
+        }
+        .drop-zones {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+        .drop-zone {
+            background-color: #4a5568;
+            border: 2px dashed #a0aec0;
+            border-radius: 0.5rem;
+            min-height: 60px;
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: #e2e8f0;
+            font-style: italic;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+        .drop-zone.drag-over {
+            background-color: #3f4654;
+            border-color: #facc15;
+        }
+        .drop-zone.drag-correct {
+            background-color: #10b981; /* Green for correct */
+            color: #1a202c;
+            border-color: #10b981;
+        }
+        .drop-zone.drag-incorrect {
+            background-color: #ef4444; /* Red for incorrect */
+            color: #1a202c;
+            border-color: #ef4444;
+        }
+        .drop-zone.filled {
+            border-style: solid;
+        }
+        /* Style for the loading overlay */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            color: white;
+            font-size: 1.5rem;
+            flex-direction: column;
+            gap: 1rem;
+            visibility: hidden;
+            opacity: 0;
+            transition: visibility 0s, opacity 0.5s linear;
+        }
+        .loading-overlay.visible {
+            visibility: visible;
+            opacity: 1;
+        }
+        .loader {
+            border: 8px solid #f3f3f3;
+            border-top: 8px solid #facc15;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
     </style>
 </head>
 <body>
-    <div class="container">
+    <div class="container" id="main-content">
         <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-center my-8 headline">
             Daby English Expressions
         </h1>
@@ -138,7 +240,7 @@
             </div>
 
             <p class="text-gray-200 mb-4">
-                Isso significa que você presta serviço para Google e o mesmo te paga.
+                Isso significa que você presta serviço para o Google e é pago por isso.
             </p>
 
             <p class="text-gray-100 mb-2">
@@ -173,6 +275,9 @@
                 </p>
                 <p class="text-gray-100">
                     Your final answer is <span class="text-green-400 font-bold text-2xl">I am at work</span>
+                </p>
+                <p class="text-gray-200 mt-2">
+                    O passado de {is} é {was}.
                 </p>
             </div>
 
@@ -216,7 +321,10 @@
             </div>
 
             <p class="text-gray-200 mb-4">
-                Isso significa que trabalha e responde dentro da área (sales ou IT). Não usa <span class="highlight-text">{area em ingles}</span> para falar sobre area dentro da empresa. A area dentro da empresa é <span class="highlight-text">department</span>.
+                Isso significa que você trabalha e responde dentro da área (sales ou IT). Para falar sobre a área dentro da empresa, não se usa a palavra **"area"** em inglês, mas sim **"department"**.
+            </p>
+            <p class="text-gray-200 mb-4">
+                Uma observação importante: é comum o erro de adicionar a letra 'a' no final de palavras como 'Platform' e 'department'. Lembre-se que a forma correta é sem o 'a' final.
             </p>
 
             <p class="text-gray-100 mb-2">
@@ -244,10 +352,10 @@
 
             <div class="example-box">
                 <p class="text-gray-100 mb-2">
-                    Imagine that you want to say <span class="highlight-text">{moro em uma regiåo}</span>, say
+                    Imagine that you want to say <span class="highlight-text">{moro em uma região}</span>, say
                 </p>
                 <p class="text-yellow-300 font-semibold text-xl mb-4">
-                    I + live + in + (qual é o nome da sua regiåo - bairro / cidade / país?)
+                    I + live + in + (qual é o nome da sua região - bairro / cidade / país?)
                 </p>
                 <p class="text-gray-100">
                     Your final answer is <span class="text-green-400 font-bold text-2xl">I live in {Salvador / Brazil}</span>
@@ -259,7 +367,7 @@
             </div>
 
             <p class="text-gray-200 mb-4">
-                Sempre usa preposiçåo <span class="highlight-text">{in}</span> na frente de uma regiåo geografico - lugar.
+                Sempre se usa a preposição <span class="highlight-text">{in}</span> na frente de uma região geográfica.
             </p>
 
             <p class="text-gray-100 mb-2">
@@ -302,16 +410,24 @@
             </div>
 
             <p class="text-gray-200 mb-4">
-                Sempre usa preposiçåo <span class="highlight-text">{on}</span> para mostrar que vc esta trabalhando em um projeto / relatorio, analise, resultado, etc.
+                Sempre se usa a preposição <span class="highlight-text">{on}</span> para mostrar que você está trabalhando em um projeto, relatório, análise, resultado, etc.
             </p>
 
             <p class="text-gray-100 mb-2">
-                Try 2 sentences now
+                Agora, pratique! Tente 2 frases.
             </p>
 
+            <div class="flex flex-col sm:flex-row items-center gap-4 mb-4">
+                <input type="text" placeholder="Primeira frase aqui..." class="flex-grow input-field">
+                <button class="check-answer-btn" data-answer="Resposta possível: 'I am working on the presentation.'">
+                    Check answer
+                </button>
+            </div>
+            <div class="answer-reveal"></div>
+
             <div class="flex flex-col sm:flex-row items-center gap-4">
-                <input type="text" placeholder="Sua resposta aqui..." class="flex-grow input-field">
-                <button class="check-answer-btn" data-answer="Possible answers: 'I am working on the presentation.' or 'She is working on the new strategy.'">
+                <input type="text" placeholder="Segunda frase aqui..." class="flex-grow input-field">
+                <button class="check-answer-btn" data-answer="Resposta possível: 'She is working on the new strategy.'">
                     Check answer
                 </button>
             </div>
@@ -350,57 +466,73 @@
             </div>
 
             <p class="text-gray-200 mb-4">
-                Vale lembrar que estou usando “I have got” inves de usar “I have”. Vc deve fazer um jeito para isso virar automatico.
+                Vale lembrar que estou usando “I have got” em vez de usar “I have”. Você deve fazer isso virar automático.
             </p>
             <ul class="list-disc list-inside text-gray-200 mb-4 ml-4">
                 <li>Eu tenho = I have got (esquece - I have mas está correto).</li>
                 <li>Nós temos = We have got (esquece - We have mas está correto).</li>
             </ul>
             <p class="text-gray-200 mb-4">
-                Sempre usa <span class="highlight-text">HAVE GOT</span> para o verbo TER no tempo atual - o presente - no momento de falar.
+                Sempre se usa <span class="highlight-text">HAVE GOT</span> para o verbo TER no tempo presente, no momento de falar.
             </p>
 
             <p class="text-gray-100 mb-2">
-                Try 3 sentences now
+                Agora, pratique! Tente 3 frases.
             </p>
 
+            <div class="flex flex-col sm:flex-row items-center gap-4 mb-4">
+                <input type="text" placeholder="Primeira frase aqui..." class="flex-grow input-field">
+                <button class="check-answer-btn" data-answer="Resposta possível: 'We have got a new client.'">
+                    Check answer
+                </button>
+            </div>
+            <div class="answer-reveal"></div>
+
+            <div class="flex flex-col sm:flex-row items-center gap-4 mb-4">
+                <input type="text" placeholder="Segunda frase aqui..." class="flex-grow input-field">
+                <button class="check-answer-btn" data-answer="Resposta possível: 'She has got a great idea.'">
+                    Check answer
+                </button>
+            </div>
+            <div class="answer-reveal"></div>
+
             <div class="flex flex-col sm:flex-row items-center gap-4">
-                <input type="text" placeholder="Sua resposta aqui..." class="flex-grow input-field">
-                <button class="check-answer-btn" data-answer="Possible answers: 'We have got a new client.' 'She has got a great idea.' 'They have got a lot of work.'">
+                <input type="text" placeholder="Terceira frase aqui..." class="flex-grow input-field">
+                <button class="check-answer-btn" data-answer="Resposta possível: 'They have got a lot of work.'">
                     Check answer
                 </button>
             </div>
             <div class="answer-reveal"></div>
         </div>
 
-        <!-- Lesson 7: Problema bastante complexa e séria (A serious matter) -->
+        <!-- Lesson 7: Problema bastante complexo e sério (A serious matter) -->
         <div class="lesson-card">
-            <h2 class="text-2xl font-bold sub-headline mb-4">Expressão 7: Problema bastante complexa e séria</h2>
+            <h2 class="text-2xl font-bold sub-headline mb-4">Expressão 7: Problema bastante complexo e sério</h2>
             <p class="text-gray-200 mb-4">
                 Quando a situação é de maior gravidade, usamos a expressão <span class="highlight-text">'a serious matter'</span>.
             </p>
 
             <div class="example-box">
                 <p class="text-gray-100 mb-2">
-                    Imagine that you want to say <span class="highlight-text">{problema bastante complexa e seria}</span>, say
+                    Imagine that you want to say <span class="highlight-text">{problema bastante complexo e sério}</span>, say
                 </p>
                 <p class="text-yellow-300 font-semibold text-xl mb-4">
                     A serious matter
                 </p>
                 <p class="text-gray-100">
-                    Your final answer is <span class="text-green-400 font-bold text-2xl">We have GOT a serious matter (Estamos com problemas serias - problemåo)</span>
+                    Your final answer is <span class="text-green-400 font-bold text-2xl">We have GOT a serious matter (Estamos com problemas sérios - problemão)</span>
                 </p>
                 <p class="text-gray-100 mt-2">
                     One more example:
                 </p>
-                <p class="text-green-400 font-bold text-2xl">We haD a serious matter (troca have got por had para mostrar o passado)</p>
+                <p class="text-green-400 font-bold text-2xl">We haD a serious matter (use 'had' no lugar de 'have got' para indicar o passado)</p>
             </div>
 
             <p class="text-gray-200 mb-4">
                 Translate:
             </p>
             <p class="text-yellow-300 font-semibold text-lg mb-4">
-                Estou com uma problema serio no trabalho.
+                Estou com um problema sério no trabalho.
             </p>
 
             <div class="flex flex-col sm:flex-row items-center gap-4">
@@ -421,10 +553,10 @@
 
             <div class="example-box">
                 <p class="text-gray-100 mb-2">
-                    Imagine that you want to say <span class="highlight-text">{uma problema bastante complexa e seria}</span>, and you need <span class="highlight-text">(AGENDAR UMA REUNIAO)</span> say
+                    Imagine that you want to say <span class="highlight-text">{um problema bastante complexo e sério}</span>, and you need <span class="highlight-text">(AGENDAR UMA REUNIÃO)</span> say
                 </p>
                 <p class="text-yellow-300 font-semibold text-xl mb-4">
-                    {uma problema bastante complexa e seria} = A serious matter
+                    {um problema bastante complexo e sério} = A serious matter
                 </p>
                 <p class="text-yellow-300 font-semibold text-xl mb-4">
                     Temos = We have got
@@ -433,16 +565,16 @@
                     Final: <span class="text-green-400 font-bold text-2xl">We have got a serious matter</span>
                 </p>
                 <p class="text-gray-100 mt-4">
-                    Now, we need to say <span class="highlight-text">(PRECISAMOS AGENDAR UMA REUNIAO)</span>, say
+                    Now, we need to say <span class="highlight-text">(PRECISAMOS AGENDAR UMA REUNIÃO)</span>, say
                 </p>
                 <p class="text-green-400 font-bold text-2xl">We need to schedule a meeting.</p>
             </div>
 
             <p class="text-gray-200 mb-4">
-                Voce pode usar <span class="highlight-text">{deve ou precisa}</span> mas em ingles tente usar sempre <span class="highlight-text">(need)</span> - must é muito forte e mas para mostrar uma obrigaçåo.
+                Você pode usar <span class="highlight-text">{deve ou precisa}</span>, mas em inglês tente usar sempre <span class="highlight-text">'(need)'</span>. O verbo 'must' é muito forte e usado para indicar uma obrigação.
             </p>
             <p class="text-gray-200 mb-4">
-                Para ser mais educado e elegante com seu ingles, usa <span class="highlight-text">{SHALL}</span> na frente do verbo. Soa muito elegante.
+                Para ser mais educado e elegante com seu inglês, use <span class="highlight-text">{SHALL}</span> na frente do verbo. Soa muito elegante.
             </p>
             <p class="text-yellow-300 font-semibold text-xl mb-4">
                 Fica assim:
@@ -451,16 +583,9 @@
             <p class="text-gray-200 mb-4">
                 Assim podemos usar <span class="highlight-text">(SET UP)</span> para <span class="highlight-text">(SCHEDULE)</span>
             </p>
-            <p class="text-green-400 font-bold text-2xl mb-4">We shall SET UP to schedule a meeting.</p>
+            <p class="text-green-400 font-bold text-2xl mb-4">We shall SET UP a meeting.</p>
             <p class="text-gray-200 mb-4">
-                To schedule (verbo - a ser conjugado) é agendar
-            </p>
-
-            <p class="text-gray-200 mb-4">
-                Translate:
-            </p>
-            <p class="text-yellow-300 font-semibold text-lg mb-4">
-                Eu devo agendar uma reunião urgente
+                To schedule (verbo - a ser conjugado) é agendar.
             </p>
 
             <div class="flex flex-col sm:flex-row items-center gap-4">
@@ -481,7 +606,7 @@
 
             <div class="example-box">
                 <p class="text-gray-100 mb-2">
-                    Imagine that you want to say <span class="highlight-text">{estou em uma reuniåo}</span>, say
+                    Imagine that you want to say <span class="highlight-text">{estou em uma reunião}</span>, say
                 </p>
                 <p class="text-yellow-300 font-semibold text-xl mb-4">
                     I + am + at + a + meeting
@@ -499,7 +624,7 @@
                 Translate:
             </p>
             <p class="text-yellow-300 font-semibold text-lg mb-4">
-                Estamos em uma reuniåo
+                Estamos em uma reunião
             </p>
 
             <div class="flex flex-col sm:flex-row items-center gap-4">
@@ -520,13 +645,13 @@
 
             <div class="example-box">
                 <p class="text-gray-100 mb-2">
-                    Imagine that you want to say <span class="highlight-text">{estou online para a reuniåo}</span>, say
+                    Imagine that you want to say <span class="highlight-text">{estou online para a reunião}</span>, say
                 </p>
                 <p class="text-yellow-300 font-semibold text-xl mb-4">
-                    I + am + in (para resposta rapida e muito comum no trabalho quando alguém ja esta esperando)
+                    I + am + in (para uma resposta rápida e muito comum no trabalho quando alguém já está esperando)
                 </p>
                 <p class="text-yellow-300 font-semibold text-xl mb-4">
-                    I + have joined + the + meeting (para resposta rapida também e muito comum no trabalho quando alguém ja esta esperando mas uma versåo mais completa)
+                    I + have joined + the + meeting (para uma resposta rápida também, e muito comum no trabalho quando alguém já está esperando, mas é uma versão mais completa)
                 </p>
                 <p class="text-gray-100 mt-4">
                     Vamos elaborar mais:
@@ -538,29 +663,22 @@
                     I + will + join + YOU + in + 5 minutes
                 </p>
                 <p class="text-gray-100">
-                    Your final answer is <span class="text-green-400 font-bold text-2xl">I will join YOU in 5 minutes (evite de usar - connect)</span>
+                    Your final answer is <span class="text-green-400 font-bold text-2xl">I will join YOU in 5 minutes (evite usar "connect")</span>
                 </p>
             </div>
 
             <p class="text-gray-200 mb-4">
-                Isso significa que vou participar na reunião em 5 minutos.
+                Isso significa que vou participar da reunião em 5 minutos.
             </p>
             <p class="text-gray-200 mb-4">
                 Mais uma coisa:
             </p>
             <p class="text-yellow-300 font-semibold text-lg mb-4">
-                Clique para ingressar na reunião em ingles
+                Clique para ingressar na reunião em inglês
             </p>
             <p class="text-green-400 font-bold text-2xl mb-4">Click to join the meeting.</p>
             <p class="text-gray-200 mb-4">
-                Conclusåo final: vamos usar <span class="highlight-text">(join)</span> para mostrar que vc vai ingressar ou ingressou or participou na reuniåo.
-            </p>
-
-            <p class="text-gray-200 mb-4">
-                Translate:
-            </p>
-            <p class="text-yellow-300 font-semibold text-lg mb-4">
-                Clique aqui para ingressar e vou conectar em 10 minutos
+                Conclusão final: vamos usar <span class="highlight-text">(join)</span> para mostrar que você vai ingressar, ingressou ou participou da reunião.
             </p>
 
             <div class="flex flex-col sm:flex-row items-center gap-4">
@@ -572,48 +690,48 @@
             <div class="answer-reveal"></div>
         </div>
 
-        <!-- Lesson 11: Participo em reunião -->
+        <!-- Lesson 11: Participo de reuniões -->
         <div class="lesson-card">
-            <h2 class="text-2xl font-bold sub-headline mb-4">Expressão 11: Participo em reunião</h2>
+            <h2 class="text-2xl font-bold sub-headline mb-4">Expressão 11: Participo de reuniões</h2>
             <p class="text-gray-200 mb-4">
                 Para expressar que você participa ativamente de reuniões, o verbo <span class="highlight-text">'attend'</span> é o mais adequado.
             </p>
 
             <div class="example-box">
                 <p class="text-gray-100 mb-2">
-                    Imagine that you want to say <span class="highlight-text">(Participo em reunião)</span>, say
+                    Imagine that you want to say <span class="highlight-text">(Participo de reuniões)</span>, say
                 </p>
                 <p class="text-yellow-300 font-semibold text-xl mb-4">
-                    I + attend + in + meetings
+                    I + attend + meetings
                 </p>
                 <p class="text-gray-100">
-                    Your final answer is <span class="text-green-400 font-bold text-2xl">I attend in meetings</span>
+                    Your final answer is <span class="text-green-400 font-bold text-2xl">I attend meetings (não se usa 'in' depois do verbo attend)</span>
                 </p>
             </div>
 
             <p class="text-gray-200 mb-4">
-                Isso significa que eu participo ativamente em reunioes.
+                Isso significa que eu participo ativamente de reuniões.
             </p>
 
             <div class="example-box">
                 <p class="text-gray-100 mb-2">
-                    Imagine in the past, you say <span class="highlight-text">(Participei em 2 reunioes)</span>,say
+                    Imagine in the past, you say <span class="highlight-text">(Participei de 2 reuniões)</span>,say
                 </p>
                 <p class="text-green-400 font-bold text-2xl">I attended 2 meetings</p>
             </div>
 
             <p class="text-gray-200 mb-4">
-                Do not use participate.
+                Não use o verbo "participate".
             </p>
             <p class="text-gray-200 mb-4">
-                Tanto faz participar ou assistir uma reuniåo sera sempre attend - até pode usar join.
+                Tanto para "participar de" quanto para "assistir a" uma reunião, o verbo principal será sempre **attend**. Você também pode usar **join**.
             </p>
 
             <p class="text-gray-200 mb-4">
                 Translate:
             </p>
             <p class="text-yellow-300 font-semibold text-lg mb-4">
-                AManha vou assistir 3 reunioes com clientes
+                Amanhã vou assistir 3 reuniões com clientes
             </p>
 
             <div class="flex flex-col sm:flex-row items-center gap-4">
@@ -645,17 +763,17 @@
             </div>
 
             <p class="text-gray-200 mb-4">
-                Isso significa que ja ja respondo.
+                Isso significa que já já respondo.
             </p>
             <p class="text-gray-200 mb-4">
                 Vale ressaltar alguns pontos aqui:
             </p>
             <ul class="list-disc list-inside text-gray-200 mb-4 ml-4">
                 <li>I para eu</li>
-                <li>Shall - para mostrar o futuro e veja que eu nåo usei ‘will’. Shall é mais britanico e elegante. Mas se vc quer usar ‘will’ fique a vontade.</li>
-                <li>Usei reply para responder - especialmente em escrita</li>
-                <li>You = para se dirigir a pessoa na conversa</li>
-                <li>Shortly = é uma expressaåo para dizer em breve / já já</li>
+                <li>Shall - para mostrar o futuro e veja que eu **não** usei ‘will’. Shall é mais **britânico** e elegante. Mas se **você** quer usar ‘will’, fique **à** vontade.</li>
+                <li>Usei reply para responder, especialmente em **escrita**.</li>
+                <li>You = para se dirigir à pessoa na conversa</li>
+                <li>Shortly = é uma **expressão** para dizer em breve / já já</li>
             </ul>
 
             <p class="text-gray-200 mb-4">
@@ -694,15 +812,15 @@
             </div>
 
             <p class="text-gray-200 mb-4">
-                Isso significa que estou esforçando em trabalhar no contrato.
+                Isso significa que estou me esforçando para trabalhar no contrato.
             </p>
             <p class="text-gray-200 mb-4">
                 Vale ressaltar alguns pontos aqui:
             </p>
             <ul class="list-disc list-inside text-gray-200 mb-4 ml-4">
-                <li>Estou analisando ou é Estou verificando - I am working on</li>
-                <li>Mas em ingles mais avanzado tente I am going through / I am running through</li>
-                <li>Avoid to use checking and anaylsing…. Ingles fraco</li>
+                <li>Estou analisando ou estou verificando = I am working on</li>
+                <li>Mas em inglês mais **avançado**, tente I am going through / I am running through</li>
+                <li>Evite usar 'checking' e 'analysing'. Isso soa como um inglês mais fraco.</li>
             </ul>
 
             <p class="text-gray-200 mb-4">
@@ -744,8 +862,8 @@
                 Vale ressaltar alguns pontos aqui:
             </p>
             <ul class="list-disc list-inside text-gray-200 mb-4 ml-4">
-                <li>Vamos + um verbo (vamos emitir) mostrar o futuro e usei shall mais o verbo.</li>
-                <li>Issue = é um verbo também para dizer emitir um documento</li>
+                <li>Vamos + um verbo (vamos emitir) **para mostrar o futuro**, e usei shall mais o verbo.</li>
+                <li>Issue = é um verbo também para dizer emitir um documento.</li>
                 <li>Tax invoice = é a nota fiscal.</li>
             </ul>
 
@@ -765,6 +883,111 @@
             <div class="answer-reveal"></div>
         </div>
 
+        <!-- Quick Reference Section -->
+        <div class="lesson-card mt-12">
+            <h2 class="text-3xl font-bold headline mb-6">Referência Rápida das Expressões</h2>
+            <p class="text-gray-300 mb-6">
+                Aqui está um resumo das expressões que aprendemos, com uma breve explicação sobre o contexto em que elas são usadas e a melhor forma de entendê-las para evitar erros comuns de um falante de português.
+            </p>
+            
+            <div class="mb-8">
+                <h3 class="text-xl font-bold sub-headline mb-2">Trabalho e Localização</h3>
+                <p class="text-gray-200">
+                    <strong>I work at {empresa}</strong>: Use <span class="highlight-text">'at'</span> para o nome da empresa onde você trabalha. Pense em "at" como se fosse o "ponto" físico da empresa.
+                </p>
+                <p class="text-gray-200 mt-2">
+                    <strong>I work in {departamento}</strong>: Use <span class="highlight-text">'in'</span> para o setor ou área específica de trabalho. Pense em "in" como "dentro de" um departamento.
+                </p>
+                <p class="text-gray-200 mt-2">
+                    <strong>I live in {região}</strong>: Use <span class="highlight-text">'in'</span> para indicar que você mora dentro de uma área geográfica maior, como uma cidade ou um país. É a preposição padrão para localização residencial.
+                </p>
+            </div>
+            
+            <div class="mb-8">
+                <h3 class="text-xl font-bold sub-headline mb-2">Projetos e Tarefas</h3>
+                <p class="text-gray-200">
+                    <strong>I am working on {projeto}</strong>: Use <span class="highlight-text">'on'</span> para mostrar que você está ativamente engajado em uma tarefa, projeto, relatório, etc. É a forma mais natural de dizer "estou trabalhando em" algo.
+                </p>
+                <p class="text-gray-200 mt-2">
+                    <strong>I am working on the contract</strong>: Uma aplicação direta da regra acima. Você está se dedicando a essa tarefa em particular.
+                </p>
+                <p class="text-gray-200 mt-2">
+                    <strong>I am going through {documento}</strong>: Expressão mais avançada para "estou analisando" ou "estou verificando". Soa mais profissional do que "I am checking".
+                </p>
+            </div>
+            
+            <div class="mb-8">
+                <h3 class="text-xl font-bold sub-headline mb-2">Comunicação e Reuniões</h3>
+                <p class="text-gray-200">
+                    <strong>I am at a meeting</strong>: Use <span class="highlight-text">'at'</span> para indicar que você está participando de uma reunião. É a forma mais direta e comum.
+                </p>
+                <p class="text-gray-200 mt-2">
+                    <strong>I will join you in 5 minutes</strong>: Para reuniões online, use <span class="highlight-text">'join'</span> em vez de "connect" para indicar que você vai ingressar. A preposição "in" indica a contagem regressiva para o tempo de entrada.
+                </p>
+                <p class="text-gray-200 mt-2">
+                    <strong>I shall reply you shortly</strong>: Uma forma educada e elegante de dizer "eu responderei em breve". O <span class="highlight-text">'shall'</span> é uma alternativa mais formal e britânica para <span class="highlight-text">'will'</span>.
+                </p>
+            </div>
+            
+            <div class="mb-8">
+                <h3 class="text-xl font-bold sub-headline mb-2">Problemas e Ações Corporativas</h3>
+                <p class="text-gray-200">
+                    <strong>I have got an issue</strong>: Use <span class="highlight-text">'have got'</span> como uma alternativa natural e fluida para "I have" (eu tenho/estou com). A palavra "issue" é o termo padrão para "problema" no ambiente de trabalho.
+                </p>
+                <p class="text-gray-200 mt-2">
+                    <strong>We have got a serious matter</strong>: A expressão <span class="highlight-text">'a serious matter'</span> é usada para indicar um "problema sério" ou "uma questão grave".
+                </p>
+                <p class="text-gray-200 mt-2">
+                    <strong>We shall issue a tax invoice</strong>: <span class="highlight-text">'Issue'</span> é o verbo ideal para "emitir" documentos como notas fiscais.
+                </p>
+            </div>
+
+        </div>
+
+        <!-- NEW: Drag and Drop Exercise Section -->
+        <div class="lesson-card mt-12">
+            <h2 class="text-3xl font-bold headline mb-6">Exercício: Arraste e Solte</h2>
+            <p class="text-gray-300 mb-6">
+                Arraste a expressão em inglês para a sua tradução correta em português.
+            </p>
+            <div id="drag-drop-container">
+                <div id="drag-items" class="drag-items">
+                    <div class="drag-item" draggable="true" data-expression="I am working on">I am working on</div>
+                    <div class="drag-item" draggable="true" data-expression="I live in">I live in</div>
+                    <div class="drag-item" draggable="true" data-expression="I am going through">I am going through</div>
+                    <div class="drag-item" draggable="true" data-expression="I will join you in 5 minutes">I will join you in 5 minutes</div>
+                    <div class="drag-item" draggable="true" data-expression="I am at a meeting">I am at a meeting</div>
+                    <div class="drag-item" draggable="true" data-expression="We have got a serious matter">We have got a serious matter</div>
+                    <div class="drag-item" draggable="true" data-expression="I have got an issue">I have got an issue</div>
+                    <div class="drag-item" draggable="true" data-expression="I shall reply you shortly">I shall reply you shortly</div>
+                    <div class="drag-item" draggable="true" data-expression="We shall issue a tax invoice">We shall issue a tax invoice</div>
+                </div>
+                
+                <div id="drop-zones" class="drop-zones mt-8">
+                    <div class="drop-zone" data-answer="I am working on">Estou trabalhando em</div>
+                    <div class="drop-zone" data-answer="I live in">Eu moro em</div>
+                    <div class="drop-zone" data-answer="I am going through">Estou analisando/verificando</div>
+                    <div class="drop-zone" data-answer="I will join you in 5 minutes">Eu entro em 5 minutos</div>
+                    <div class="drop-zone" data-answer="I am at a meeting">Estou em uma reunião</div>
+                    <div class="drop-zone" data-answer="We have got a serious matter">Temos um problema sério</div>
+                    <div class="drop-zone" data-answer="I have got an issue">Tenho um problema</div>
+                    <div class="drop-zone" data-answer="I shall reply you shortly">Eu responderei em breve</div>
+                    <div class="drop-zone" data-answer="We shall issue a tax invoice">Vamos emitir uma nota fiscal</div>
+                </div>
+                <button id="reset-button" class="check-answer-btn mt-6">Reiniciar</button>
+            </div>
+        </div>
+
+        <div class="flex justify-center mt-12 mb-8">
+            <button id="export-pdf-btn" class="check-answer-btn px-8 py-3">Exportar para PDF</button>
+        </div>
+    </div>
+    
+    <!-- Loading overlay for PDF generation -->
+    <div id="loading-overlay" class="loading-overlay">
+        <div class="loader"></div>
+        <span>Gerando PDF...</span>
+        <span>Isso pode demorar alguns segundos.</span>
     </div>
 
     <footer>
@@ -777,19 +1000,178 @@
 
             checkButtons.forEach(button => {
                 button.addEventListener('click', () => {
-                    const answerReveal = button.closest('.lesson-card').querySelector('.answer-reveal');
+                    const parentDiv = button.closest('.lesson-card').querySelector('.answer-reveal');
+                    let answerReveal = button.closest('.flex').nextElementSibling;
+                    
+                    if (!answerReveal || !answerReveal.classList.contains('answer-reveal')) {
+                        answerReveal = parentDiv;
+                    }
+
                     const answerText = button.dataset.answer;
 
                     if (answerReveal.classList.contains('show')) {
                         answerReveal.classList.remove('show');
                         setTimeout(() => {
                             answerReveal.innerHTML = '';
-                        }, 500); // Wait for fade out before clearing content
+                        }, 500);
                     } else {
                         answerReveal.innerHTML = `<p>${answerText}</p>`;
                         answerReveal.classList.add('show');
                     }
                 });
+            });
+
+            // Drag and Drop Logic
+            const dragItems = document.querySelectorAll('.drag-item');
+            const dropZones = document.querySelectorAll('.drop-zone');
+            const resetButton = document.getElementById('reset-button');
+            
+            let draggedItem = null;
+
+            dragItems.forEach(item => {
+                item.addEventListener('dragstart', (e) => {
+                    draggedItem = e.target;
+                    e.dataTransfer.setData('text/plain', e.target.dataset.expression);
+                    e.target.classList.add('opacity-50');
+                });
+
+                item.addEventListener('dragend', (e) => {
+                    e.target.classList.remove('opacity-50');
+                });
+            });
+
+            dropZones.forEach(zone => {
+                zone.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    if (!e.target.classList.contains('filled')) {
+                        e.target.classList.add('drag-over');
+                    }
+                });
+
+                zone.addEventListener('dragleave', (e) => {
+                    e.target.classList.remove('drag-over');
+                });
+
+                zone.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    e.target.classList.remove('drag-over');
+                    
+                    if (e.target.classList.contains('filled')) {
+                        return;
+                    }
+
+                    const draggedData = e.dataTransfer.getData('text/plain');
+                    const dropZoneAnswer = e.target.dataset.answer;
+                    
+                    const originalExpression = draggedItem.textContent;
+
+                    // Trim whitespace for a more robust comparison
+                    if (draggedData.trim() === dropZoneAnswer.trim()) {
+                        e.target.classList.add('drag-correct', 'filled');
+                        e.target.textContent = originalExpression;
+                        draggedItem.parentNode.removeChild(draggedItem);
+                    } else {
+                        e.target.classList.add('drag-incorrect');
+                        setTimeout(() => {
+                            e.target.classList.remove('drag-incorrect');
+                        }, 1000);
+                    }
+                });
+            });
+
+            resetButton.addEventListener('click', () => {
+                // Clear all drop zones and reset classes
+                dropZones.forEach(zone => {
+                    zone.classList.remove('drag-correct', 'drag-incorrect', 'filled');
+                    // Reset the text content of the drop zone
+                    switch(zone.dataset.answer) {
+                        case 'I am working on': zone.textContent = 'Estou trabalhando em'; break;
+                        case 'I live in': zone.textContent = 'Eu moro em'; break;
+                        case 'I am going through': zone.textContent = 'Estou analisando/verificando'; break;
+                        case 'I will join you in 5 minutes': zone.textContent = 'Eu entro em 5 minutos'; break;
+                        case 'I am at a meeting': zone.textContent = 'Estou em uma reunião'; break;
+                        case 'We have got a serious matter': zone.textContent = 'Temos um problema sério'; break;
+                        case 'I have got an issue': zone.textContent = 'Tenho um problema'; break;
+                        case 'I shall reply you shortly': zone.textContent = 'Eu responderei em breve'; break;
+                        case 'We shall issue a tax invoice': zone.textContent = 'Vamos emitir uma nota fiscal'; break;
+                    }
+                });
+                
+                // Re-add drag items to their container
+                const dragItemsContainer = document.getElementById('drag-items');
+                const expressions = [
+                    {text: "I am working on", data: "I am working on"},
+                    {text: "I live in", data: "I live in"},
+                    {text: "I am going through", data: "I am going through"},
+                    {text: "I will join you in 5 minutes", data: "I will join you in 5 minutes"},
+                    {text: "I am at a meeting", data: "I am at a meeting"},
+                    {text: "We have got a serious matter", data: "We have got a serious matter"},
+                    {text: "I have got an issue", data: "I have got an issue"},
+                    {text: "I shall reply you shortly", data: "I shall reply you shortly"},
+                    {text: "We shall issue a tax invoice", data: "We shall issue a tax invoice"}
+                ];
+
+                dragItemsContainer.innerHTML = '';
+                expressions.forEach(exp => {
+                    const div = document.createElement('div');
+                    div.className = 'drag-item';
+                    div.draggable = true;
+                    div.dataset.expression = exp.data;
+                    div.textContent = exp.text;
+                    dragItemsContainer.appendChild(div);
+                });
+
+                // Re-attach drag event listeners to new elements
+                const newDragItems = document.querySelectorAll('.drag-item');
+                newDragItems.forEach(item => {
+                    item.addEventListener('dragstart', (e) => {
+                        draggedItem = e.target;
+                        e.dataTransfer.setData('text/plain', e.target.dataset.expression);
+                        e.target.classList.add('opacity-50');
+                    });
+                    item.addEventListener('dragend', (e) => {
+                        e.target.classList.remove('opacity-50');
+                    });
+                });
+            });
+
+            // PDF export function
+            const exportPdfBtn = document.getElementById('export-pdf-btn');
+            const mainContent = document.getElementById('main-content');
+            const loadingOverlay = document.getElementById('loading-overlay');
+
+            exportPdfBtn.addEventListener('click', async () => {
+                if (!window.jspdf || !window.html2canvas) {
+                    console.error("jsPDF or html2canvas library not loaded.");
+                    return;
+                }
+
+                // Show loading overlay
+                loadingOverlay.classList.add('visible');
+                
+                // Wait a moment for the overlay to render
+                await new Promise(resolve => setTimeout(resolve, 100));
+
+                try {
+                    const doc = new jspdf.jsPDF('p', 'pt', 'a4');
+                    await doc.html(mainContent, {
+                        callback: function (doc) {
+                            doc.save('daby_english_expressions.pdf');
+                            // Hide loading overlay after save
+                            loadingOverlay.classList.remove('visible');
+                        },
+                        x: 10,
+                        y: 10,
+                        html2canvas: {
+                            scale: 0.8 // Adjust scale for better fit on A4
+                        }
+                    });
+                } catch (error) {
+                    console.error("Failed to generate PDF:", error);
+                    // Hide loading overlay on error
+                    loadingOverlay.classList.remove('visible');
+                    // In a real app, you might show a user-friendly error message here.
+                }
             });
         });
     </script>
