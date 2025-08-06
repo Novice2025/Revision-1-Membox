@@ -209,6 +209,69 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
+
+        /* New Reorder Exercise Styles */
+        .reorder-exercise {
+            border: 2px dashed #a0aec0;
+            border-radius: 0.5rem;
+            min-height: 50px;
+            padding: 1rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        .reorder-exercise.drag-over {
+            border-color: #facc15;
+            background-color: #3f4654;
+        }
+        .reorder-word {
+            background-color: #4a5568;
+            color: #e2e8f0;
+            padding: 0.5rem 0.75rem;
+            border-radius: 0.375rem;
+            cursor: grab;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s ease, opacity 0.2s ease;
+            font-weight: 600;
+        }
+        .reorder-word:active {
+            cursor: grabbing;
+        }
+        .reorder-words-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .reorder-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+        .reorder-feedback {
+            margin-top: 1rem;
+            font-size: 1rem;
+            font-weight: 600;
+            text-align: center;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+        .reorder-feedback.show {
+            opacity: 1;
+        }
+        .reorder-feedback.correct {
+            color: #10b981;
+        }
+        .reorder-feedback.incorrect {
+            color: #ef4444;
+        }
+        .reorder-exercise-item {
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            border-radius: 1rem;
+            background-color: #2d3748;
+        }
     </style>
 </head>
 <body>
@@ -727,20 +790,28 @@
                 Tanto para "participar de" quanto para "assistir a" uma reunião, o verbo principal será sempre **attend**. Você também pode usar **join**.
             </p>
 
-            <p class="text-gray-200 mb-4">
-                Translate:
-            </p>
-            <p class="text-yellow-300 font-semibold text-lg mb-4">
-                Amanhã vou assistir 3 reuniões com clientes
-            </p>
-
-            <div class="flex flex-col sm:flex-row items-center gap-4">
-                <input type="text" placeholder="Sua resposta aqui..." class="flex-grow input-field">
-                <button class="check-answer-btn" data-answer="Answer: 'Tomorrow I will attend 3 meetings with clients.'">
-                    Check answer
-                </button>
+            <div class="reorder-exercise-item">
+                <h3 class="text-xl font-semibold mb-4 text-gray-200">Exercício 11:</h3>
+                <p class="text-gray-300 mb-4">
+                    Amanhã vou assistir 3 reuniões com clientes
+                </p>
+                <div class="reorder-words-container" data-correct-sentence="Tomorrow I will attend 3 meetings with clients.">
+                    <div class="reorder-word" draggable="true">Tomorrow</div>
+                    <div class="reorder-word" draggable="true">will</div>
+                    <div class="reorder-word" draggable="true">I</div>
+                    <div class="reorder-word" draggable="true">clients.</div>
+                    <div class="reorder-word" draggable="true">meetings</div>
+                    <div class="reorder-word" draggable="true">with</div>
+                    <div class="reorder-word" draggable="true">attend</div>
+                    <div class="reorder-word" draggable="true">3</div>
+                </div>
+                <div class="reorder-exercise"></div>
+                <div class="reorder-buttons mt-4">
+                    <button class="check-reorder-btn check-answer-btn">Verificar</button>
+                    <button class="reset-reorder-btn check-answer-btn">Reiniciar</button>
+                </div>
+                <div class="reorder-feedback"></div>
             </div>
-            <div class="answer-reveal"></div>
         </div>
 
         <!-- Lesson 12: Vou te responder em breve -->
@@ -776,20 +847,26 @@
                 <li>Shortly = é uma **expressão** para dizer em breve / já já</li>
             </ul>
 
-            <p class="text-gray-200 mb-4">
-                Translate:
-            </p>
-            <p class="text-yellow-300 font-semibold text-lg mb-4">
-                Vou responder o cliente em breve
-            </p>
-
-            <div class="flex flex-col sm:flex-row items-center gap-4">
-                <input type="text" placeholder="Sua resposta aqui..." class="flex-grow input-field">
-                <button class="check-answer-btn" data-answer="Answer: 'I shall reply the client shortly.' or 'I will reply to the client shortly.'">
-                    Check answer
-                </button>
+            <div class="reorder-exercise-item">
+                <h3 class="text-xl font-semibold mb-4 text-gray-200">Exercício 12:</h3>
+                <p class="text-gray-300 mb-4">
+                    Vou responder o cliente em breve
+                </p>
+                <div class="reorder-words-container" data-correct-sentence="I shall reply the client shortly.">
+                    <div class="reorder-word" draggable="true">I</div>
+                    <div class="reorder-word" draggable="true">shortly.</div>
+                    <div class="reorder-word" draggable="true">shall</div>
+                    <div class="reorder-word" draggable="true">the</div>
+                    <div class="reorder-word" draggable="true">client</div>
+                    <div class="reorder-word" draggable="true">reply</div>
+                </div>
+                <div class="reorder-exercise"></div>
+                <div class="reorder-buttons mt-4">
+                    <button class="check-reorder-btn check-answer-btn">Verificar</button>
+                    <button class="reset-reorder-btn check-answer-btn">Reiniciar</button>
+                </div>
+                <div class="reorder-feedback"></div>
             </div>
-            <div class="answer-reveal"></div>
         </div>
 
         <!-- Lesson 13: Estou analisando -->
@@ -823,20 +900,26 @@
                 <li>Evite usar 'checking' e 'analysing'. Isso soa como um inglês mais fraco.</li>
             </ul>
 
-            <p class="text-gray-200 mb-4">
-                Translate:
-            </p>
-            <p class="text-yellow-300 font-semibold text-lg mb-4">
-                Estamos verificando o documento
-            </p>
-
-            <div class="flex flex-col sm:flex-row items-center gap-4">
-                <input type="text" placeholder="Sua resposta aqui..." class="flex-grow input-field">
-                <button class="check-answer-btn" data-answer="Answer: 'We are working on the document.' or 'We are going through the document.'">
-                    Check answer
-                </button>
+            <div class="reorder-exercise-item">
+                <h3 class="text-xl font-semibold mb-4 text-gray-200">Exercício 13:</h3>
+                <p class="text-gray-300 mb-4">
+                    Estamos verificando o documento
+                </p>
+                <div class="reorder-words-container" data-correct-sentence="We are going through the document.">
+                    <div class="reorder-word" draggable="true">are</div>
+                    <div class="reorder-word" draggable="true">the</div>
+                    <div class="reorder-word" draggable="true">document.</div>
+                    <div class="reorder-word" draggable="true">We</div>
+                    <div class="reorder-word" draggable="true">through</div>
+                    <div class="reorder-word" draggable="true">going</div>
+                </div>
+                <div class="reorder-exercise"></div>
+                <div class="reorder-buttons mt-4">
+                    <button class="check-reorder-btn check-answer-btn">Verificar</button>
+                    <button class="reset-reorder-btn check-answer-btn">Reiniciar</button>
+                </div>
+                <div class="reorder-feedback"></div>
             </div>
-            <div class="answer-reveal"></div>
         </div>
 
         <!-- Lesson 14: Vamos emitir uma nota fiscal -->
@@ -867,23 +950,28 @@
                 <li>Tax invoice = é a nota fiscal.</li>
             </ul>
 
-            <p class="text-gray-200 mb-4">
-                Translate:
-            </p>
-            <p class="text-yellow-300 font-semibold text-lg mb-4">
-                Emiti a nota fiscal.
-            </p>
-
-            <div class="flex flex-col sm:flex-row items-center gap-4">
-                <input type="text" placeholder="Sua resposta aqui..." class="flex-grow input-field">
-                <button class="check-answer-btn" data-answer="Answer: 'I issued the tax invoice.'">
-                    Check answer
-                </button>
+            <div class="reorder-exercise-item">
+                <h3 class="text-xl font-semibold mb-4 text-gray-200">Exercício 14:</h3>
+                <p class="text-gray-300 mb-4">
+                    Emiti a nota fiscal.
+                </p>
+                <div class="reorder-words-container" data-correct-sentence="I issued the tax invoice.">
+                    <div class="reorder-word" draggable="true">I</div>
+                    <div class="reorder-word" draggable="true">tax</div>
+                    <div class="reorder-word" draggable="true">issued</div>
+                    <div class="reorder-word" draggable="true">the</div>
+                    <div class="reorder-word" draggable="true">invoice.</div>
+                </div>
+                <div class="reorder-exercise"></div>
+                <div class="reorder-buttons mt-4">
+                    <button class="check-reorder-btn check-answer-btn">Verificar</button>
+                    <button class="reset-reorder-btn check-answer-btn">Reiniciar</button>
+                </div>
+                <div class="reorder-feedback"></div>
             </div>
-            <div class="answer-reveal"></div>
         </div>
 
-        <!-- Quick Reference Section -->
+        <!-- NEW: Quick Reference Section -->
         <div class="lesson-card mt-12">
             <h2 class="text-3xl font-bold headline mb-6">Referência Rápida das Expressões</h2>
             <p class="text-gray-300 mb-6">
@@ -944,7 +1032,7 @@
 
         </div>
 
-        <!-- NEW: Drag and Drop Exercise Section -->
+        <!-- Quick Drag and Drop Exercise Section -->
         <div class="lesson-card mt-12">
             <h2 class="text-3xl font-bold headline mb-6">Exercício: Arraste e Solte</h2>
             <p class="text-gray-300 mb-6">
@@ -978,6 +1066,272 @@
             </div>
         </div>
 
+        <!-- NEW: Reorder Sentences Exercises -->
+        <div class="lesson-card mt-12">
+            <h2 class="text-3xl font-bold headline mb-6">Exercícios de Ordenação de Frases</h2>
+            <p class="text-gray-300 mb-6">
+                Reordene as palavras para formar frases corretas em inglês.
+            </p>
+            <div id="reorder-container">
+                <div class="reorder-exercise-item">
+                    <p class="text-gray-300 mb-4">Exercício 1: (Vou entrar em 10 minutos)</p>
+                    <div class="reorder-words-container" data-correct-sentence="I will join you in 10 minutes.">
+                        <div class="reorder-word" draggable="true">I</div>
+                        <div class="reorder-word" draggable="true">in</div>
+                        <div class="reorder-word" draggable="true">10</div>
+                        <div class="reorder-word" draggable="true">will</div>
+                        <div class="reorder-word" draggable="true">join</div>
+                        <div class="reorder-word" draggable="true">minutes.</div>
+                        <div class="reorder-word" draggable="true">you</div>
+                    </div>
+                    <div class="reorder-exercise"></div>
+                    <div class="reorder-buttons mt-4">
+                        <button class="check-reorder-btn check-answer-btn">Verificar</button>
+                        <button class="reset-reorder-btn check-answer-btn">Reiniciar</button>
+                    </div>
+                    <div class="reorder-feedback"></div>
+                </div>
+                <div class="reorder-exercise-item">
+                    <p class="text-gray-300 mb-4">Exercício 2: (Temos um assunto sério para discutir)</p>
+                    <div class="reorder-words-container" data-correct-sentence="We have a serious matter to discuss.">
+                        <div class="reorder-word" draggable="true">a</div>
+                        <div class="reorder-word" draggable="true">matter</div>
+                        <div class="reorder-word" draggable="true">have</div>
+                        <div class="reorder-word" draggable="true">discuss.</div>
+                        <div class="reorder-word" draggable="true">to</div>
+                        <div class="reorder-word" draggable="true">We</div>
+                        <div class="reorder-word" draggable="true">serious</div>
+                    </div>
+                    <div class="reorder-exercise"></div>
+                    <div class="reorder-buttons mt-4">
+                        <button class="check-reorder-btn check-answer-btn">Verificar</button>
+                        <button class="reset-reorder-btn check-answer-btn">Reiniciar</button>
+                    </div>
+                    <div class="reorder-feedback"></div>
+                </div>
+                <div class="reorder-exercise-item">
+                    <p class="text-gray-300 mb-4">Exercício 3: (Ela está a trabalhar no novo relatório)</p>
+                    <div class="reorder-words-container" data-correct-sentence="She is working on the new report.">
+                        <div class="reorder-word" draggable="true">is</div>
+                        <div class="reorder-word" draggable="true">new</div>
+                        <div class="reorder-word" draggable="true">the</div>
+                        <div class="reorder-word" draggable="true">She</div>
+                        <div class="reorder-word" draggable="true">report.</div>
+                        <div class="reorder-word" draggable="true">working</div>
+                        <div class="reorder-word" draggable="true">on</div>
+                    </div>
+                    <div class="reorder-exercise"></div>
+                    <div class="reorder-buttons mt-4">
+                        <button class="check-reorder-btn check-answer-btn">Verificar</button>
+                        <button class="reset-reorder-btn check-answer-btn">Reiniciar</button>
+                    </div>
+                    <div class="reorder-feedback"></div>
+                </div>
+                <div class="reorder-exercise-item">
+                    <p class="text-gray-300 mb-4">Exercício 4: (Recebi um email importante)</p>
+                    <div class="reorder-words-container" data-correct-sentence="I have got an important email.">
+                        <div class="reorder-word" draggable="true">an</div>
+                        <div class="reorder-word" draggable="true">email.</div>
+                        <div class="reorder-word" draggable="true">I</div>
+                        <div class="reorder-word" draggable="true">got</div>
+                        <div class="reorder-word" draggable="true">have</div>
+                        <div class="reorder-word" draggable="true">important</div>
+                    </div>
+                    <div class="reorder-exercise"></div>
+                    <div class="reorder-buttons mt-4">
+                        <button class="check-reorder-btn check-answer-btn">Verificar</button>
+                        <button class="reset-reorder-btn check-answer-btn">Reiniciar</button>
+                    </div>
+                    <div class="reorder-feedback"></div>
+                </div>
+                <div class="reorder-exercise-item">
+                    <p class="text-gray-300 mb-4">Exercício 5: (Precisamos agendar uma reunião)</p>
+                    <div class="reorder-words-container" data-correct-sentence="We need to schedule a meeting.">
+                        <div class="reorder-word" draggable="true">to</div>
+                        <div class="reorder-word" draggable="true">schedule</div>
+                        <div class="reorder-word" draggable="true">a</div>
+                        <div class="reorder-word" draggable="true">meeting.</div>
+                        <div class="reorder-word" draggable="true">need</div>
+                        <div class="reorder-word" draggable="true">We</div>
+                    </div>
+                    <div class="reorder-exercise"></div>
+                    <div class="reorder-buttons mt-4">
+                        <button class="check-reorder-btn check-answer-btn">Verificar</button>
+                        <button class="reset-reorder-btn check-answer-btn">Reiniciar</button>
+                    </div>
+                    <div class="reorder-feedback"></div>
+                </div>
+                <div class="reorder-exercise-item">
+                    <p class="text-gray-300 mb-4">Exercício 6: (Vou responder em breve)</p>
+                    <div class="reorder-words-container" data-correct-sentence="I shall reply you shortly.">
+                        <div class="reorder-word" draggable="true">reply</div>
+                        <div class="reorder-word" draggable="true">I</div>
+                        <div class="reorder-word" draggable="true">shall</div>
+                        <div class="reorder-word" draggable="true">you</div>
+                        <div class="reorder-word" draggable="true">shortly.</div>
+                    </div>
+                    <div class="reorder-exercise"></div>
+                    <div class="reorder-buttons mt-4">
+                        <button class="check-reorder-btn check-answer-btn">Verificar</button>
+                        <button class="reset-reorder-btn check-answer-btn">Reiniciar</button>
+                    </div>
+                    <div class="reorder-feedback"></div>
+                </div>
+                <div class="reorder-exercise-item">
+                    <p class="text-gray-300 mb-4">Exercício 7: (Ele trabalha no departamento de vendas)</p>
+                    <div class="reorder-words-container" data-correct-sentence="He works in the sales department.">
+                        <div class="reorder-word" draggable="true">in</div>
+                        <div class="reorder-word" draggable="true">He</div>
+                        <div class="reorder-word" draggable="true">the</div>
+                        <div class="reorder-word" draggable="true">works</div>
+                        <div class="reorder-word" draggable="true">department.</div>
+                        <div class="reorder-word" draggable="true">sales</div>
+                    </div>
+                    <div class="reorder-exercise"></div>
+                    <div class="reorder-buttons mt-4">
+                        <button class="check-reorder-btn check-answer-btn">Verificar</button>
+                        <button class="reset-reorder-btn check-answer-btn">Reiniciar</button>
+                    </div>
+                    <div class="reorder-feedback"></div>
+                </div>
+                <div class="reorder-exercise-item">
+                    <p class="text-gray-300 mb-4">Exercício 8: (Eu moro no centro da cidade)</p>
+                    <div class="reorder-words-container" data-correct-sentence="I live in the city center.">
+                        <div class="reorder-word" draggable="true">I</div>
+                        <div class="reorder-word" draggable="true">city</div>
+                        <div class="reorder-word" draggable="true">in</div>
+                        <div class="reorder-word" draggable="true">live</div>
+                        <div class="reorder-word" draggable="true">the</div>
+                        <div class="reorder-word" draggable="true">center.</div>
+                    </div>
+                    <div class="reorder-exercise"></div>
+                    <div class="reorder-buttons mt-4">
+                        <button class="check-reorder-btn check-answer-btn">Verificar</button>
+                        <button class="reset-reorder-btn check-answer-btn">Reiniciar</button>
+                    </div>
+                    <div class="reorder-feedback"></div>
+                </div>
+                <div class="reorder-exercise-item">
+                    <p class="text-gray-300 mb-4">Exercício 9: (Eles participaram da reunião com o cliente)</p>
+                    <div class="reorder-words-container" data-correct-sentence="They attended the client meeting.">
+                        <div class="reorder-word" draggable="true">the</div>
+                        <div class="reorder-word" draggable="true">meeting.</div>
+                        <div class="reorder-word" draggable="true">attended</div>
+                        <div class="reorder-word" draggable="true">client</div>
+                        <div class="reorder-word" draggable="true">They</div>
+                    </div>
+                    <div class="reorder-exercise"></div>
+                    <div class="reorder-buttons mt-4">
+                        <button class="check-reorder-btn check-answer-btn">Verificar</button>
+                        <button class="reset-reorder-btn check-answer-btn">Reiniciar</button>
+                    </div>
+                    <div class="reorder-feedback"></div>
+                </div>
+                <div class="reorder-exercise-item">
+                    <p class="text-gray-300 mb-4">Exercício 10: (Temos notícias entusiasmantes)</p>
+                    <div class="reorder-words-container" data-correct-sentence="We have got some exciting news.">
+                        <div class="reorder-word" draggable="true">We</div>
+                        <div class="reorder-word" draggable="true">some</div>
+                        <div class="reorder-word" draggable="true">got</div>
+                        <div class="reorder-word" draggable="true">exciting</div>
+                        <div class="reorder-word" draggable="true">have</div>
+                        <div class="reorder-word" draggable="true">news.</div>
+                    </div>
+                    <div class="reorder-exercise"></div>
+                    <div class="reorder-buttons mt-4">
+                        <button class="check-reorder-btn check-answer-btn">Verificar</button>
+                        <button class="reset-reorder-btn check-answer-btn">Reiniciar</button>
+                    </div>
+                    <div class="reorder-feedback"></div>
+                </div>
+                <div class="reorder-exercise-item">
+                    <p class="text-gray-300 mb-4">Exercício 11: (Estou numa reunião agora)</p>
+                    <div class="reorder-words-container" data-correct-sentence="I am at a meeting right now.">
+                        <div class="reorder-word" draggable="true">at</div>
+                        <div class="reorder-word" draggable="true">meeting</div>
+                        <div class="reorder-word" draggable="true">am</div>
+                        <div class="reorder-word" draggable="true">I</div>
+                        <div class="reorder-word" draggable="true">right</div>
+                        <div class="reorder-word" draggable="true">a</div>
+                        <div class="reorder-word" draggable="true">now.</div>
+                    </div>
+                    <div class="reorder-exercise"></div>
+                    <div class="reorder-buttons mt-4">
+                        <button class="check-reorder-btn check-answer-btn">Verificar</button>
+                        <button class="reset-reorder-btn check-answer-btn">Reiniciar</button>
+                    </div>
+                    <div class="reorder-feedback"></div>
+                </div>
+                <div class="reorder-exercise-item">
+                    <p class="text-gray-300 mb-4">Exercício 12: (Ela emitiu a fatura ontem)</p>
+                    <div class="reorder-words-container" data-correct-sentence="She issued the tax invoice yesterday.">
+                        <div class="reorder-word" draggable="true">the</div>
+                        <div class="reorder-word" draggable="true">She</div>
+                        <div class="reorder-word" draggable="true">issued</div>
+                        <div class="reorder-word" draggable="true">yesterday.</div>
+                        <div class="reorder-word" draggable="true">tax</div>
+                        <div class="reorder-word" draggable="true">invoice</div>
+                    </div>
+                    <div class="reorder-exercise"></div>
+                    <div class="reorder-buttons mt-4">
+                        <button class="check-reorder-btn check-answer-btn">Verificar</button>
+                        <button class="reset-reorder-btn check-answer-btn">Reiniciar</button>
+                    </div>
+                    <div class="reorder-feedback"></div>
+                </div>
+                <div class="reorder-exercise-item">
+                    <p class="text-gray-300 mb-4">Exercício 13: (Estou a analisar o documento)</p>
+                    <div class="reorder-words-container" data-correct-sentence="I am going through the document.">
+                        <div class="reorder-word" draggable="true">going</div>
+                        <div class="reorder-word" draggable="true">am</div>
+                        <div class="reorder-word" draggable="true">through</div>
+                        <div class="reorder-word" draggable="true">document.</div>
+                        <div class="reorder-word" draggable="true">I</div>
+                        <div class="reorder-word" draggable="true">the</div>
+                    </div>
+                    <div class="reorder-exercise"></div>
+                    <div class="reorder-buttons mt-4">
+                        <button class="check-reorder-btn check-answer-btn">Verificar</button>
+                        <button class="reset-reorder-btn check-answer-btn">Reiniciar</button>
+                    </div>
+                    <div class="reorder-feedback"></div>
+                </div>
+                <div class="reorder-exercise-item">
+                    <p class="text-gray-300 mb-4">Exercício 14: (O projeto está quase terminado)</p>
+                    <div class="reorder-words-container" data-correct-sentence="The project is almost finished.">
+                        <div class="reorder-word" draggable="true">The</div>
+                        <div class="reorder-word" draggable="true">is</div>
+                        <div class="reorder-word" draggable="true">project</div>
+                        <div class="reorder-word" draggable="true">almost</div>
+                        <div class="reorder-word" draggable="true">finished.</div>
+                    </div>
+                    <div class="reorder-exercise"></div>
+                    <div class="reorder-buttons mt-4">
+                        <button class="check-reorder-btn check-answer-btn">Verificar</button>
+                        <button class="reset-reorder-btn check-answer-btn">Reiniciar</button>
+                    </div>
+                    <div class="reorder-feedback"></div>
+                </div>
+                <div class="reorder-exercise-item">
+                    <p class="text-gray-300 mb-4">Exercício 15: (Temos que trabalhar nisto juntos)</p>
+                    <div class="reorder-words-container" data-correct-sentence="We must work on this together.">
+                        <div class="reorder-word" draggable="true">must</div>
+                        <div class="reorder-word" draggable="true">work</div>
+                        <div class="reorder-word" draggable="true">on</div>
+                        <div class="reorder-word" draggable="true">We</div>
+                        <div class="reorder-word" draggable="true">together.</div>
+                        <div class="reorder-word" draggable="true">this</div>
+                    </div>
+                    <div class="reorder-exercise"></div>
+                    <div class="reorder-buttons mt-4">
+                        <button class="check-reorder-btn check-answer-btn">Verificar</button>
+                        <button class="reset-reorder-btn check-answer-btn">Reiniciar</button>
+                    </div>
+                    <div class="reorder-feedback"></div>
+                </div>
+            </div>
+        </div>
+
         <div class="flex justify-center mt-12 mb-8">
             <button id="export-pdf-btn" class="check-answer-btn px-8 py-3">Exportar para PDF</button>
         </div>
@@ -996,7 +1350,8 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const checkButtons = document.querySelectorAll('.check-answer-btn');
+            // Logic for the text input exercises
+            const checkButtons = document.querySelectorAll('.check-answer-btn:not(.check-reorder-btn):not(.reset-reorder-btn)');
 
             checkButtons.forEach(button => {
                 button.addEventListener('click', () => {
@@ -1021,7 +1376,7 @@
                 });
             });
 
-            // Drag and Drop Logic
+            // Logic for the original drag and drop exercise
             const dragItems = document.querySelectorAll('.drag-item');
             const dropZones = document.querySelectorAll('.drop-zone');
             const resetButton = document.getElementById('reset-button');
@@ -1065,7 +1420,6 @@
                     
                     const originalExpression = draggedItem.textContent;
 
-                    // Trim whitespace for a more robust comparison
                     if (draggedData.trim() === dropZoneAnswer.trim()) {
                         e.target.classList.add('drag-correct', 'filled');
                         e.target.textContent = originalExpression;
@@ -1080,10 +1434,8 @@
             });
 
             resetButton.addEventListener('click', () => {
-                // Clear all drop zones and reset classes
                 dropZones.forEach(zone => {
                     zone.classList.remove('drag-correct', 'drag-incorrect', 'filled');
-                    // Reset the text content of the drop zone
                     switch(zone.dataset.answer) {
                         case 'I am working on': zone.textContent = 'Estou trabalhando em'; break;
                         case 'I live in': zone.textContent = 'Eu moro em'; break;
@@ -1097,7 +1449,6 @@
                     }
                 });
                 
-                // Re-add drag items to their container
                 const dragItemsContainer = document.getElementById('drag-items');
                 const expressions = [
                     {text: "I am working on", data: "I am working on"},
@@ -1121,7 +1472,6 @@
                     dragItemsContainer.appendChild(div);
                 });
 
-                // Re-attach drag event listeners to new elements
                 const newDragItems = document.querySelectorAll('.drag-item');
                 newDragItems.forEach(item => {
                     item.addEventListener('dragstart', (e) => {
@@ -1132,6 +1482,88 @@
                     item.addEventListener('dragend', (e) => {
                         e.target.classList.remove('opacity-50');
                     });
+                });
+            });
+
+            // Logic for the new reorder sentences exercises
+            document.querySelectorAll('.reorder-exercise-item').forEach(item => {
+                const wordsContainer = item.querySelector('.reorder-words-container');
+                const sentenceBuilder = item.querySelector('.reorder-exercise');
+                const checkBtn = item.querySelector('.check-reorder-btn');
+                const resetBtn = item.querySelector('.reset-reorder-btn');
+                const feedbackDiv = item.querySelector('.reorder-feedback');
+                
+                let words = Array.from(wordsContainer.children).map(word => word.cloneNode(true));
+                words = words.sort(() => Math.random() - 0.5);
+                words.forEach(word => wordsContainer.appendChild(word));
+
+                let draggedWord = null;
+
+                wordsContainer.addEventListener('dragstart', (e) => {
+                    draggedWord = e.target;
+                    e.dataTransfer.setData('text/plain', e.target.textContent.trim());
+                    e.target.classList.add('opacity-50');
+                });
+                
+                wordsContainer.addEventListener('dragend', (e) => {
+                    e.target.classList.remove('opacity-50');
+                });
+                
+                sentenceBuilder.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    sentenceBuilder.classList.add('drag-over');
+                });
+                
+                sentenceBuilder.addEventListener('dragleave', () => {
+                    sentenceBuilder.classList.remove('drag-over');
+                });
+                
+                sentenceBuilder.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    sentenceBuilder.classList.remove('drag-over');
+                    if (draggedWord) {
+                        const droppedWord = draggedWord.cloneNode(true);
+                        droppedWord.draggable = false;
+                        sentenceBuilder.appendChild(droppedWord);
+                        draggedWord.remove();
+                        draggedWord = null;
+                    }
+                });
+
+                checkBtn.addEventListener('click', () => {
+                    const correctSentence = wordsContainer.dataset.correctSentence.trim().toLowerCase();
+                    const userSentence = Array.from(sentenceBuilder.children)
+                        .map(word => word.textContent.trim().toLowerCase())
+                        .join(' ');
+                    
+                    feedbackDiv.classList.remove('correct', 'incorrect');
+                    feedbackDiv.classList.add('show');
+
+                    if (userSentence === correctSentence.replace(/\.$/, '')) {
+                        feedbackDiv.textContent = "Correto! ✅";
+                        feedbackDiv.classList.add('correct');
+                    } else {
+                        feedbackDiv.textContent = "Incorreto. Tente novamente.";
+                        feedbackDiv.classList.add('incorrect');
+                    }
+                });
+
+                resetBtn.addEventListener('click', () => {
+                    sentenceBuilder.innerHTML = '';
+                    wordsContainer.innerHTML = '';
+                    
+                    const originalWords = wordsContainer.dataset.correctSentence.split(' ').map(word => {
+                        const div = document.createElement('div');
+                        div.className = 'reorder-word';
+                        div.draggable = true;
+                        div.textContent = word;
+                        return div;
+                    });
+                    
+                    originalWords.sort(() => Math.random() - 0.5);
+                    originalWords.forEach(word => wordsContainer.appendChild(word));
+
+                    feedbackDiv.classList.remove('show', 'correct', 'incorrect');
                 });
             });
 
@@ -1146,10 +1578,8 @@
                     return;
                 }
 
-                // Show loading overlay
                 loadingOverlay.classList.add('visible');
                 
-                // Wait a moment for the overlay to render
                 await new Promise(resolve => setTimeout(resolve, 100));
 
                 try {
@@ -1157,20 +1587,17 @@
                     await doc.html(mainContent, {
                         callback: function (doc) {
                             doc.save('daby_english_expressions.pdf');
-                            // Hide loading overlay after save
                             loadingOverlay.classList.remove('visible');
                         },
                         x: 10,
                         y: 10,
                         html2canvas: {
-                            scale: 0.8 // Adjust scale for better fit on A4
+                            scale: 0.8
                         }
                     });
                 } catch (error) {
                     console.error("Failed to generate PDF:", error);
-                    // Hide loading overlay on error
                     loadingOverlay.classList.remove('visible');
-                    // In a real app, you might show a user-friendly error message here.
                 }
             });
         });
