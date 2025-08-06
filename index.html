@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daby English Expressions</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts - Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #1a202c; /* Dark background inspired by Netflix */
+            background-image: radial-gradient(at 50% 0%, rgba(255, 0, 0, 0.15) 0%, transparent 70%),
+                              radial-gradient(at 0% 100%, rgba(255, 165, 0, 0.15) 0%, transparent 70%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            color: #e2e8f0; /* Light gray text for contrast */
+        }
+        .container {
+            max-width: 960px; /* Increased max-width for better content display */
+            margin: 0 auto;
+            padding: 1.5rem;
+            flex-grow: 1;
+        }
+        .lesson-card {
+            background-color: #2d3748; /* Slightly lighter dark background for cards */
+            border-radius: 1rem; /* Rounded corners */
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.3); /* Deeper shadow */
+            margin-bottom: 2rem;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease-in-out;
+        }
+        .lesson-card:hover {
+            transform: translateY(-5px);
+        }
+        .headline {
+            color: #ef4444; /* McDonald's/Burger King Red */
+            font-weight: 800; /* Extra bold */
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        .sub-headline {
+            color: #facc15; /* McDonald's/Burger King Yellow */
+            font-weight: 700;
+        }
+        .highlight-text {
+            color: #f87171; /* Lighter red for emphasis */
+            font-weight: 700;
+        }
+        .example-box {
+            background-color: #4a5568; /* Darker gray for example boxes */
+            padding: 1.25rem;
+            border-radius: 0.75rem;
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+            border-left: 5px solid #facc15; /* Yellow border for emphasis */
+        }
+        .answer-reveal {
+            background-color: #10b981; /* Green for correct answers */
+            color: #1a202c; /* Dark text on green */
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-top: 1rem;
+            opacity: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: opacity 0.5s ease-out, max-height 0.5s ease-out;
+        }
+        .answer-reveal.show {
+            opacity: 1;
+            max-height: 100px; /* Adjust as needed to fit content */
+        }
+        .check-answer-btn {
+            background-color: #facc15; /* Yellow button */
+            color: #1a202c; /* Dark text */
+            font-weight: 700;
+            padding: 0.75rem 1.5rem;
+            border-radius: 9999px; /* Fully rounded */
+            transition: background-color 0.3s ease-in-out, transform 0.2s ease-in-out;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
+        .check-answer-btn:hover {
+            background-color: #fbbf24; /* Lighter yellow on hover */
+            transform: translateY(-2px);
+        }
+        .input-field {
+            background-color: #4a5568;
+            color: #e2e8f0;
+            border-radius: 0.5rem;
+            padding: 0.75rem 1rem;
+            border: 2px solid transparent;
+            transition: border-color 0.3s ease-in-out;
+        }
+        .input-field:focus {
+            outline: none;
+            border-color: #facc15;
+        }
+        footer {
+            background-color: #1a202c;
+            color: #a0aec0;
+            padding: 1.5rem;
+            text-align: center;
+            margin-top: auto; /* Pushes footer to the bottom */
+            border-top: 1px solid #2d3748;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-center my-8 headline">
+            Daby English Expressions
+        </h1>
+        <p class="text-center text-lg mb-12 text-gray-300">
+            Bem-vindo(a) ao seu guia para dominar expressões essenciais em inglês no ambiente de trabalho e no dia a dia! Vamos aprender juntos de forma prática e eficaz.
+        </p>
+
+        <!-- Lesson 1: Trabalho em uma empresa -->
+        <div class="lesson-card">
+            <h2 class="text-2xl font-bold sub-headline mb-4">Expressão 1: Trabalho em uma empresa</h2>
+            <p class="text-gray-200 mb-4">
+                Para indicar onde você presta serviço, a preposição <span class="highlight-text">'at'</span> é a escolha mais comum e natural em inglês.
+            </p>
+
+            <div class="example-box">
+                <p class="text-gray-100 mb-2">
+                    Imagine that you want to say <span class="highlight-text">{trabalho em uma empresa}</span>, say
+                </p>
+                <p class="text-yellow-300 font-semibold text-xl mb-4">
+                    I + work + at + (qual é o nome da sua empresa?)
+                </p>
+                <p class="text-gray-100">
+                    Your final answer is <span class="text-green-400 font-bold text-2xl">I work at {Google}</span>
+                </p>
+            </div>
+
+            <p class="text-gray-200 mb-4">
+                Isso significa que você presta serviço para Google e o mesmo te paga.
+            </p>
+
+            <p class="text-gray-100 mb-2">
+                Agora, pratique!
+            </p>
+            <p class="text-yellow-300 font-semibold text-lg mb-4">
+                Where do you work?
+            </p>
+
+            <div class="flex flex-col sm:flex-row items-center gap-4">
+                <input type="text" placeholder="Sua resposta aqui..." class="flex-grow input-field">
+                <button class="check-answer-btn" data-answer="Possible answer: 'I work at [Your Company Name].'">
+                    Check answer
+                </button>
+            </div>
+            <div class="answer-reveal"></div>
+        </div>
+
+        <!-- Lesson 2: No trabalho -->
+        <div class="lesson-card">
+            <h2 class="text-2xl font-bold sub-headline mb-4">Expressão 2: No trabalho</h2>
+            <p class="text-gray-200 mb-4">
+                Quando você quer dizer que está fisicamente no ambiente de trabalho, a expressão mais simples e direta é <span class="highlight-text">'at work'</span>.
+            </p>
+
+            <div class="example-box">
+                <p class="text-gray-100 mb-2">
+                    Imagine that you want to say <span class="highlight-text">{no trabalho}</span>, say
+                </p>
+                <p class="text-yellow-300 font-semibold text-xl mb-4">
+                    At + work
+                </p>
+                <p class="text-gray-100">
+                    Your final answer is <span class="text-green-400 font-bold text-2xl">I am at work</span>
+                </p>
+            </div>
+
+            <p class="text-gray-200 mb-4">
+                Translate:
+            </p>
+            <p class="text-yellow-300 font-semibold text-lg mb-4">
+                Estava no trabalho
+            </p>
+
+            <div class="flex flex-col sm:flex-row items-center gap-4">
+                <input type="text" placeholder="Sua resposta aqui..." class="flex-grow input-field">
+                <button class="check-answer-btn" data-answer="Answer: 'I was at work.'">
+                    Check answer
+                </button>
+            </div>
+            <div class="answer-reveal"></div>
+        </div>
+
+        <!-- Lesson 3: Trabalho em uma área -->
+        <div class="lesson-card">
+            <h2 class="text-2xl font-bold sub-headline mb-4">Expressão 3: Trabalho em uma área</h2>
+            <p class="text-gray-200 mb-4">
+                Para especificar a área ou departamento em que você trabalha dentro de uma empresa, usamos a preposição <span class="highlight-text">'in'</span>. Lembre-se, não usamos "area" para nos referirmos a um departamento.
+            </p>
+
+            <div class="example-box">
+                <p class="text-gray-100 mb-2">
+                    Imagine that you want to say <span class="highlight-text">{trabalho em uma área}</span>, say
+                </p>
+                <p class="text-yellow-300 font-semibold text-xl mb-4">
+                    I + work + in + (qual é o nome da sua área?)
+                </p>
+                <p class="text-gray-100">
+                    Your final answer is <span class="text-green-400 font-bold text-2xl">I work in {sales}</span>
+                </p>
+                <p class="text-gray-100 mt-2">
+                    One more example:
+                </p>
+                <p class="text-green-400 font-bold text-2xl">I work in {IT}</p>
+            </div>
+
+            <p class="text-gray-200 mb-4">
+                Isso significa que trabalha e responde dentro da área (sales ou IT). Não usa <span class="highlight-text">{area em ingles}</span> para falar sobre area dentro da empresa. A area dentro da empresa é <span class="highlight-text">department</span>.
+            </p>
+
+            <p class="text-gray-100 mb-2">
+                Agora, tente você!
+            </p>
+            <p class="text-yellow-300 font-semibold text-lg mb-4">
+                Where do you work?
+            </p>
+
+            <div class="flex flex-col sm:flex-row items-center gap-4">
+                <input type="text" placeholder="Sua resposta aqui..." class="flex-grow input-field">
+                <button class="check-answer-btn" data-answer="Possible answer: 'I work in marketing.'">
+                    Check answer
+                </button>
+            </div>
+            <div class="answer-reveal"></div>
+        </div>
+
+        <!-- Lesson 4: Moro em uma região -->
+        <div class="lesson-card">
+            <h2 class="text-2xl font-bold sub-headline mb-4">Expressão 4: Moro em uma região</h2>
+            <p class="text-gray-200 mb-4">
+                Ao falar sobre o local onde você reside, seja um bairro, cidade ou país, a preposição <span class="highlight-text">'in'</span> é sempre utilizada para indicar uma área geográfica.
+            </p>
+
+            <div class="example-box">
+                <p class="text-gray-100 mb-2">
+                    Imagine that you want to say <span class="highlight-text">{moro em uma regiåo}</span>, say
+                </p>
+                <p class="text-yellow-300 font-semibold text-xl mb-4">
+                    I + live + in + (qual é o nome da sua regiåo - bairro / cidade / país?)
+                </p>
+                <p class="text-gray-100">
+                    Your final answer is <span class="text-green-400 font-bold text-2xl">I live in {Salvador / Brazil}</span>
+                </p>
+                <p class="text-gray-100 mt-2">
+                    One more example:
+                </p>
+                <p class="text-green-400 font-bold text-2xl">I work in {Vila Eva}</p>
+            </div>
+
+            <p class="text-gray-200 mb-4">
+                Sempre usa preposiçåo <span class="highlight-text">{in}</span> na frente de uma regiåo geografico - lugar.
+            </p>
+
+            <p class="text-gray-100 mb-2">
+                Agora, tente você!
+            </p>
+            <p class="text-yellow-300 font-semibold text-lg mb-4">
+                Where do you live?
+            </p>
+
+            <div class="flex flex-col sm:flex-row items-center gap-4">
+                <input type="text" placeholder="Sua resposta aqui..." class="flex-grow input-field">
+                <button class="check-answer-btn" data-answer="Possible answer: 'I live in São Paulo.'">
+                    Check answer
+                </button>
+            </div>
+            <div class="answer-reveal"></div>
+        </div>
+
+        <!-- Lesson 5: Estou trabalhando neste projeto -->
+        <div class="lesson-card">
+            <h2 class="text-2xl font-bold sub-headline mb-4">Expressão 5: Estou trabalhando neste projeto</h2>
+            <p class="text-gray-200 mb-4">
+                Para indicar que você está ativamente engajado em um projeto, relatório, análise ou resultado, a preposição <span class="highlight-text">'on'</span> é a mais apropriada.
+            </p>
+
+            <div class="example-box">
+                <p class="text-gray-100 mb-2">
+                    Imagine that you want to say <span class="highlight-text">{estou trabalhando neste projeto}</span>, say
+                </p>
+                <p class="text-yellow-300 font-semibold text-xl mb-4">
+                    I + am working + on + this project
+                </p>
+                <p class="text-gray-100">
+                    Your final answer is <span class="text-green-400 font-bold text-2xl">I am working on this project</span>
+                </p>
+                <p class="text-gray-100 mt-2">
+                    One more example:
+                </p>
+                <p class="text-green-400 font-bold text-2xl">I am working on the report</p>
+            </div>
+
+            <p class="text-gray-200 mb-4">
+                Sempre usa preposiçåo <span class="highlight-text">{on}</span> para mostrar que vc esta trabalhando em um projeto / relatorio, analise, resultado, etc.
+            </p>
+
+            <p class="text-gray-100 mb-2">
+                Try 2 sentences now
+            </p>
+
+            <div class="flex flex-col sm:flex-row items-center gap-4">
+                <input type="text" placeholder="Sua resposta aqui..." class="flex-grow input-field">
+                <button class="check-answer-btn" data-answer="Possible answers: 'I am working on the presentation.' or 'She is working on the new strategy.'">
+                    Check answer
+                </button>
+            </div>
+            <div class="answer-reveal"></div>
+        </div>
+
+        <!-- Lesson 6: Problemas no trabalho (I have got) -->
+        <div class="lesson-card">
+            <h2 class="text-2xl font-bold sub-headline mb-4">Expressão 6: Problemas no trabalho (I have got)</h2>
+            <p class="text-gray-200 mb-4">
+                Para expressar a existência de problemas ou situações, a forma <span class="highlight-text">'have got'</span> é muito comum e natural em inglês, especialmente em conversas.
+            </p>
+
+            <div class="example-box">
+                <p class="text-gray-100 mb-2">
+                    Imagine that you want to say <span class="highlight-text">{problemas no trabalho}</span>, say
+                </p>
+                <p class="text-yellow-300 font-semibold text-xl mb-4">
+                    Issues
+                </p>
+                <p class="text-gray-100 mt-4">
+                    Agora vamos montar uma frase:
+                </p>
+                <p class="text-gray-100 mb-2">
+                    Imagine that you want to say <span class="highlight-text">{Tenho um problema}</span>, say
+                </p>
+                <p class="text-yellow-300 font-semibold text-xl mb-4">
+                    I + have + got + an + issue
+                </p>
+                <p class="text-gray-100">
+                    Your final answer is <span class="text-green-400 font-bold text-2xl">I have got an issue</span>
+                </p>
+                <p class="text-gray-100 mt-2">
+                    Uma outra maneira comum no trabalho seria <span class="text-green-400 font-bold text-2xl">I have got a situation</span>
+                </p>
+            </div>
+
+            <p class="text-gray-200 mb-4">
+                Vale lembrar que estou usando “I have got” inves de usar “I have”. Vc deve fazer um jeito para isso virar automatico.
+            </p>
+            <ul class="list-disc list-inside text-gray-200 mb-4 ml-4">
+                <li>Eu tenho = I have got (esquece - I have mas está correto).</li>
+                <li>Nós temos = We have got (esquece - We have mas está correto).</li>
+            </ul>
+            <p class="text-gray-200 mb-4">
+                Sempre usa <span class="highlight-text">HAVE GOT</span> para o verbo TER no tempo atual - o presente - no momento de falar.
+            </p>
+
+            <p class="text-gray-100 mb-2">
+                Try 3 sentences now
+            </p>
+
+            <div class="flex flex-col sm:flex-row items-center gap-4">
+                <input type="text" placeholder="Sua resposta aqui..." class="flex-grow input-field">
+                <button class="check-answer-btn" data-answer="Possible answers: 'We have got a new client.' 'She has got a great idea.' 'They have got a lot of work.'">
+                    Check answer
+                </button>
+            </div>
+            <div class="answer-reveal"></div>
+        </div>
+
+        <!-- Lesson 7: Problema bastante complexa e séria (A serious matter) -->
+        <div class="lesson-card">
+            <h2 class="text-2xl font-bold sub-headline mb-4">Expressão 7: Problema bastante complexa e séria</h2>
+            <p class="text-gray-200 mb-4">
+                Quando a situação é de maior gravidade, usamos a expressão <span class="highlight-text">'a serious matter'</span>.
+            </p>
+
+            <div class="example-box">
+                <p class="text-gray-100 mb-2">
+                    Imagine that you want to say <span class="highlight-text">{problema bastante complexa e seria}</span>, say
+                </p>
+                <p class="text-yellow-300 font-semibold text-xl mb-4">
+                    A serious matter
+                </p>
+                <p class="text-gray-100">
+                    Your final answer is <span class="text-green-400 font-bold text-2xl">We have GOT a serious matter (Estamos com problemas serias - problemåo)</span>
+                </p>
+                <p class="text-gray-100 mt-2">
+                    One more example:
+                </p>
+                <p class="text-green-400 font-bold text-2xl">We haD a serious matter (troca have got por had para mostrar o passado)</p>
+            </div>
+
+            <p class="text-gray-200 mb-4">
+                Translate:
+            </p>
+            <p class="text-yellow-300 font-semibold text-lg mb-4">
+                Estou com uma problema serio no trabalho.
+            </p>
+
+            <div class="flex flex-col sm:flex-row items-center gap-4">
+                <input type="text" placeholder="Sua resposta aqui..." class="flex-grow input-field">
+                <button class="check-answer-btn" data-answer="Answer: 'I have got a serious matter at work.'">
+                    Check answer
+                </button>
+            </div>
+            <div class="answer-reveal"></div>
+        </div>
+
+        <!-- Lesson 8: Agendar uma reunião (We need to schedule/set up a meeting) -->
+        <div class="lesson-card">
+            <h2 class="text-2xl font-bold sub-headline mb-4">Expressão 8: Agendar uma reunião</h2>
+            <p class="text-gray-200 mb-4">
+                Para expressar a necessidade de agendar algo, <span class="highlight-text">'need'</span> é a palavra mais comum. Para um tom mais formal e elegante, especialmente em inglês britânico, você pode usar <span class="highlight-text">'shall'</span>.
+            </p>
+
+            <div class="example-box">
+                <p class="text-gray-100 mb-2">
+                    Imagine that you want to say <span class="highlight-text">{uma problema bastante complexa e seria}</span>, and you need <span class="highlight-text">(AGENDAR UMA REUNIAO)</span> say
+                </p>
+                <p class="text-yellow-300 font-semibold text-xl mb-4">
+                    {uma problema bastante complexa e seria} = A serious matter
+                </p>
+                <p class="text-yellow-300 font-semibold text-xl mb-4">
+                    Temos = We have got
+                </p>
+                <p class="text-gray-100">
+                    Final: <span class="text-green-400 font-bold text-2xl">We have got a serious matter</span>
+                </p>
+                <p class="text-gray-100 mt-4">
+                    Now, we need to say <span class="highlight-text">(PRECISAMOS AGENDAR UMA REUNIAO)</span>, say
+                </p>
+                <p class="text-green-400 font-bold text-2xl">We need to schedule a meeting.</p>
+            </div>
+
+            <p class="text-gray-200 mb-4">
+                Voce pode usar <span class="highlight-text">{deve ou precisa}</span> mas em ingles tente usar sempre <span class="highlight-text">(need)</span> - must é muito forte e mas para mostrar uma obrigaçåo.
+            </p>
+            <p class="text-gray-200 mb-4">
+                Para ser mais educado e elegante com seu ingles, usa <span class="highlight-text">{SHALL}</span> na frente do verbo. Soa muito elegante.
+            </p>
+            <p class="text-yellow-300 font-semibold text-xl mb-4">
+                Fica assim:
+            </p>
+            <p class="text-green-400 font-bold text-2xl mb-4">We shall need to schedule a meeting.</p>
+            <p class="text-gray-200 mb-4">
+                Assim podemos usar <span class="highlight-text">(SET UP)</span> para <span class="highlight-text">(SCHEDULE)</span>
+            </p>
+            <p class="text-green-400 font-bold text-2xl mb-4">We shall SET UP to schedule a meeting.</p>
+            <p class="text-gray-200 mb-4">
+                To schedule (verbo - a ser conjugado) é agendar
+            </p>
+
+            <p class="text-gray-200 mb-4">
+                Translate:
+            </p>
+            <p class="text-yellow-300 font-semibold text-lg mb-4">
+                Eu devo agendar uma reunião urgente
+            </p>
+
+            <div class="flex flex-col sm:flex-row items-center gap-4">
+                <input type="text" placeholder="Sua resposta aqui..." class="flex-grow input-field">
+                <button class="check-answer-btn" data-answer="Answer: 'I shall need to schedule an urgent meeting.' or 'I need to schedule an urgent meeting.'">
+                    Check answer
+                </button>
+            </div>
+            <div class="answer-reveal"></div>
+        </div>
+
+        <!-- Lesson 9: Estou em uma reunião -->
+        <div class="lesson-card">
+            <h2 class="text-2xl font-bold sub-headline mb-4">Expressão 9: Estou em uma reunião</h2>
+            <p class="text-gray-200 mb-4">
+                Para indicar que você está participando ou atendendo a uma reunião, a preposição <span class="highlight-text">'at'</span> é a mais adequada.
+            </p>
+
+            <div class="example-box">
+                <p class="text-gray-100 mb-2">
+                    Imagine that you want to say <span class="highlight-text">{estou em uma reuniåo}</span>, say
+                </p>
+                <p class="text-yellow-300 font-semibold text-xl mb-4">
+                    I + am + at + a + meeting
+                </p>
+                <p class="text-gray-100">
+                    Your final answer is <span class="text-green-400 font-bold text-2xl">I am at a meeting</span>
+                </p>
+            </div>
+
+            <p class="text-gray-200 mb-4">
+                Isso significa que estou participando ou atendendo uma reunião.
+            </p>
+
+            <p class="text-gray-200 mb-4">
+                Translate:
+            </p>
+            <p class="text-yellow-300 font-semibold text-lg mb-4">
+                Estamos em uma reuniåo
+            </p>
+
+            <div class="flex flex-col sm:flex-row items-center gap-4">
+                <input type="text" placeholder="Sua resposta aqui..." class="flex-grow input-field">
+                <button class="check-answer-btn" data-answer="Answer: 'We are at a meeting.'">
+                    Check answer
+                </button>
+            </div>
+            <div class="answer-reveal"></div>
+        </div>
+
+        <!-- Lesson 10: Estou online para a reunião / Vou conectar em 5 minutos -->
+        <div class="lesson-card">
+            <h2 class="text-2xl font-bold sub-headline mb-4">Expressão 10: Conectando-se a uma reunião</h2>
+            <p class="text-gray-200 mb-4">
+                Quando você está prestes a entrar ou já entrou em uma reunião online, use <span class="highlight-text">'in'</span> para uma resposta rápida ou <span class="highlight-text">'have joined'</span> para uma versão mais completa. Para indicar que você vai participar, use <span class="highlight-text">'join'</span>.
+            </p>
+
+            <div class="example-box">
+                <p class="text-gray-100 mb-2">
+                    Imagine that you want to say <span class="highlight-text">{estou online para a reuniåo}</span>, say
+                </p>
+                <p class="text-yellow-300 font-semibold text-xl mb-4">
+                    I + am + in (para resposta rapida e muito comum no trabalho quando alguém ja esta esperando)
+                </p>
+                <p class="text-yellow-300 font-semibold text-xl mb-4">
+                    I + have joined + the + meeting (para resposta rapida também e muito comum no trabalho quando alguém ja esta esperando mas uma versåo mais completa)
+                </p>
+                <p class="text-gray-100 mt-4">
+                    Vamos elaborar mais:
+                </p>
+                <p class="text-gray-100 mb-2">
+                    Imagine that you want to say <span class="highlight-text">(Vou conectar em 5 minutos ou Vou ingressar em 5 minutos )</span>, say
+                </p>
+                <p class="text-yellow-300 font-semibold text-xl mb-4">
+                    I + will + join + YOU + in + 5 minutes
+                </p>
+                <p class="text-gray-100">
+                    Your final answer is <span class="text-green-400 font-bold text-2xl">I will join YOU in 5 minutes (evite de usar - connect)</span>
+                </p>
+            </div>
+
+            <p class="text-gray-200 mb-4">
+                Isso significa que vou participar na reunião em 5 minutos.
+            </p>
+            <p class="text-gray-200 mb-4">
+                Mais uma coisa:
+            </p>
+            <p class="text-yellow-300 font-semibold text-lg mb-4">
+                Clique para ingressar na reunião em ingles
+            </p>
+            <p class="text-green-400 font-bold text-2xl mb-4">Click to join the meeting.</p>
+            <p class="text-gray-200 mb-4">
+                Conclusåo final: vamos usar <span class="highlight-text">(join)</span> para mostrar que vc vai ingressar ou ingressou or participou na reuniåo.
+            </p>
+
+            <p class="text-gray-200 mb-4">
+                Translate:
+            </p>
+            <p class="text-yellow-300 font-semibold text-lg mb-4">
+                Clique aqui para ingressar e vou conectar em 10 minutos
+            </p>
+
+            <div class="flex flex-col sm:flex-row items-center gap-4">
+                <input type="text" placeholder="Sua resposta aqui..." class="flex-grow input-field">
+                <button class="check-answer-btn" data-answer="Answer: 'Click here to join and I will join you in 10 minutes.'">
+                    Check answer
+                </button>
+            </div>
+            <div class="answer-reveal"></div>
+        </div>
+
+        <!-- Lesson 11: Participo em reunião -->
+        <div class="lesson-card">
+            <h2 class="text-2xl font-bold sub-headline mb-4">Expressão 11: Participo em reunião</h2>
+            <p class="text-gray-200 mb-4">
+                Para expressar que você participa ativamente de reuniões, o verbo <span class="highlight-text">'attend'</span> é o mais adequado.
+            </p>
+
+            <div class="example-box">
+                <p class="text-gray-100 mb-2">
+                    Imagine that you want to say <span class="highlight-text">(Participo em reunião)</span>, say
+                </p>
+                <p class="text-yellow-300 font-semibold text-xl mb-4">
+                    I + attend + in + meetings
+                </p>
+                <p class="text-gray-100">
+                    Your final answer is <span class="text-green-400 font-bold text-2xl">I attend in meetings</span>
+                </p>
+            </div>
+
+            <p class="text-gray-200 mb-4">
+                Isso significa que eu participo ativamente em reunioes.
+            </p>
+
+            <div class="example-box">
+                <p class="text-gray-100 mb-2">
+                    Imagine in the past, you say <span class="highlight-text">(Participei em 2 reunioes)</span>,say
+                </p>
+                <p class="text-green-400 font-bold text-2xl">I attended 2 meetings</p>
+            </div>
+
+            <p class="text-gray-200 mb-4">
+                Do not use participate.
+            </p>
+            <p class="text-gray-200 mb-4">
+                Tanto faz participar ou assistir uma reuniåo sera sempre attend - até pode usar join.
+            </p>
+
+            <p class="text-gray-200 mb-4">
+                Translate:
+            </p>
+            <p class="text-yellow-300 font-semibold text-lg mb-4">
+                AManha vou assistir 3 reunioes com clientes
+            </p>
+
+            <div class="flex flex-col sm:flex-row items-center gap-4">
+                <input type="text" placeholder="Sua resposta aqui..." class="flex-grow input-field">
+                <button class="check-answer-btn" data-answer="Answer: 'Tomorrow I will attend 3 meetings with clients.'">
+                    Check answer
+                </button>
+            </div>
+            <div class="answer-reveal"></div>
+        </div>
+
+        <!-- Lesson 12: Vou te responder em breve -->
+        <div class="lesson-card">
+            <h2 class="text-2xl font-bold sub-headline mb-4">Expressão 12: Vou te responder em breve</h2>
+            <p class="text-gray-200 mb-4">
+                Para indicar que você responderá em pouco tempo, a expressão <span class="highlight-text">'reply you shortly'</span> é muito profissional e educada.
+            </p>
+
+            <div class="example-box">
+                <p class="text-gray-100 mb-2">
+                    Imagine that you want to say <span class="highlight-text">(vou te responder em breve)</span>, say
+                </p>
+                <p class="text-yellow-300 font-semibold text-xl mb-4">
+                    I + shall + reply + you + shortly
+                </p>
+                <p class="text-gray-100">
+                    Your final answer is <span class="text-green-400 font-bold text-2xl">I shall reply you shortly</span>
+                </p>
+            </div>
+
+            <p class="text-gray-200 mb-4">
+                Isso significa que ja ja respondo.
+            </p>
+            <p class="text-gray-200 mb-4">
+                Vale ressaltar alguns pontos aqui:
+            </p>
+            <ul class="list-disc list-inside text-gray-200 mb-4 ml-4">
+                <li>I para eu</li>
+                <li>Shall - para mostrar o futuro e veja que eu nåo usei ‘will’. Shall é mais britanico e elegante. Mas se vc quer usar ‘will’ fique a vontade.</li>
+                <li>Usei reply para responder - especialmente em escrita</li>
+                <li>You = para se dirigir a pessoa na conversa</li>
+                <li>Shortly = é uma expressaåo para dizer em breve / já já</li>
+            </ul>
+
+            <p class="text-gray-200 mb-4">
+                Translate:
+            </p>
+            <p class="text-yellow-300 font-semibold text-lg mb-4">
+                Vou responder o cliente em breve
+            </p>
+
+            <div class="flex flex-col sm:flex-row items-center gap-4">
+                <input type="text" placeholder="Sua resposta aqui..." class="flex-grow input-field">
+                <button class="check-answer-btn" data-answer="Answer: 'I shall reply the client shortly.' or 'I will reply to the client shortly.'">
+                    Check answer
+                </button>
+            </div>
+            <div class="answer-reveal"></div>
+        </div>
+
+        <!-- Lesson 13: Estou analisando -->
+        <div class="lesson-card">
+            <h2 class="text-2xl font-bold sub-headline mb-4">Expressão 13: Estou analisando</h2>
+            <p class="text-gray-200 mb-4">
+                Para dizer que você está trabalhando em algo ou verificando, use <span class="highlight-text">'I am working on'</span>. Para um inglês mais avançado, experimente <span class="highlight-text">'I am going through'</span> ou <span class="highlight-text">'I am running through'</span>.
+            </p>
+
+            <div class="example-box">
+                <p class="text-gray-100 mb-2">
+                    Imagine that you want to say <span class="highlight-text">(estou analisando)</span>, say
+                </p>
+                <p class="text-yellow-300 font-semibold text-xl mb-4">
+                    I am working on (algo - pode ser project, report, analysis, contract, issue, etc.)
+                </p>
+                <p class="text-gray-100">
+                    Your final answer is <span class="text-green-400 font-bold text-2xl">I am working on the contract or you can try I am working on the renewal.</span>
+                </p>
+            </div>
+
+            <p class="text-gray-200 mb-4">
+                Isso significa que estou esforçando em trabalhar no contrato.
+            </p>
+            <p class="text-gray-200 mb-4">
+                Vale ressaltar alguns pontos aqui:
+            </p>
+            <ul class="list-disc list-inside text-gray-200 mb-4 ml-4">
+                <li>Estou analisando ou é Estou verificando - I am working on</li>
+                <li>Mas em ingles mais avanzado tente I am going through / I am running through</li>
+                <li>Avoid to use checking and anaylsing…. Ingles fraco</li>
+            </ul>
+
+            <p class="text-gray-200 mb-4">
+                Translate:
+            </p>
+            <p class="text-yellow-300 font-semibold text-lg mb-4">
+                Estamos verificando o documento
+            </p>
+
+            <div class="flex flex-col sm:flex-row items-center gap-4">
+                <input type="text" placeholder="Sua resposta aqui..." class="flex-grow input-field">
+                <button class="check-answer-btn" data-answer="Answer: 'We are working on the document.' or 'We are going through the document.'">
+                    Check answer
+                </button>
+            </div>
+            <div class="answer-reveal"></div>
+        </div>
+
+        <!-- Lesson 14: Vamos emitir uma nota fiscal -->
+        <div class="lesson-card">
+            <h2 class="text-2xl font-bold sub-headline mb-4">Expressão 14: Vamos emitir uma nota fiscal</h2>
+            <p class="text-gray-200 mb-4">
+                Para expressar a ação de emitir um documento, como uma nota fiscal, use o verbo <span class="highlight-text">'issue'</span>.
+            </p>
+
+            <div class="example-box">
+                <p class="text-gray-100 mb-2">
+                    Imagine that you want to say <span class="highlight-text">(vamos emitir uma nota fiscal)</span>, say
+                </p>
+                <p class="text-yellow-300 font-semibold text-xl mb-4">
+                    We + shall + issue + a tax invoice
+                </p>
+                <p class="text-gray-100">
+                    Your final answer is <span class="text-green-400 font-bold text-2xl">We shall issue a tax invoice</span>
+                </p>
+            </div>
+
+            <p class="text-gray-200 mb-4">
+                Vale ressaltar alguns pontos aqui:
+            </p>
+            <ul class="list-disc list-inside text-gray-200 mb-4 ml-4">
+                <li>Vamos + um verbo (vamos emitir) mostrar o futuro e usei shall mais o verbo.</li>
+                <li>Issue = é um verbo também para dizer emitir um documento</li>
+                <li>Tax invoice = é a nota fiscal.</li>
+            </ul>
+
+            <p class="text-gray-200 mb-4">
+                Translate:
+            </p>
+            <p class="text-yellow-300 font-semibold text-lg mb-4">
+                Emiti a nota fiscal.
+            </p>
+
+            <div class="flex flex-col sm:flex-row items-center gap-4">
+                <input type="text" placeholder="Sua resposta aqui..." class="flex-grow input-field">
+                <button class="check-answer-btn" data-answer="Answer: 'I issued the tax invoice.'">
+                    Check answer
+                </button>
+            </div>
+            <div class="answer-reveal"></div>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>Daby &copy; 2025 copyright</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const checkButtons = document.querySelectorAll('.check-answer-btn');
+
+            checkButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const answerReveal = button.closest('.lesson-card').querySelector('.answer-reveal');
+                    const answerText = button.dataset.answer;
+
+                    if (answerReveal.classList.contains('show')) {
+                        answerReveal.classList.remove('show');
+                        setTimeout(() => {
+                            answerReveal.innerHTML = '';
+                        }, 500); // Wait for fade out before clearing content
+                    } else {
+                        answerReveal.innerHTML = `<p>${answerText}</p>`;
+                        answerReveal.classList.add('show');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
